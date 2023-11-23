@@ -26,6 +26,7 @@ group :development, :test do
   gem 'ridgepole'
   gem 'active_model_serializers'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do

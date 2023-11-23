@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+create_table "entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade, comment: "出馬表" do |t|
+  t.integer "race_id", null: false, comment: "レースID"
+  t.integer "horse_id", null: false, comment: "競走馬ID"
+  t.integer "bracket_number", null: false, comment: "枠番"
+  t.integer "horse_number", null: false, comment: "馬番"
+  t.integer "sex", null: false, comment: "性別"
+  t.integer "age", null: false, comment: "年齢"
+  t.integer "jockey_id", null: false, comment: "騎手ID"
+  t.float "jockey_weight", null: false, comment: "騎手体重"
+  t.float "predict_score", default: 0.0, null: false, comment: "予想スコア"
+  t.integer "result", default: 0, null: false, comment: "結果"
+  t.datetime "created_at", null: false, comment: "作成日時"
+  t.datetime "updated_at", null: false, comment: "更新日時"
+  t.index ["horse_id"], name: "horse_id"
+  t.index ["jockey_id"], name: "jockey_id"
+  t.index ["race_id", "horse_id"], name: "entries_index_0", unique: true
+end
+
+create_table "horses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade, comment: "競走馬" do |t|
+  t.string "netkeiba_horse_id", null: false, comment: "netkeibaの競走馬ID"
+  t.string "name", null: false, comment: "馬名"
+  t.datetime "created_at", null: false, comment: "作成日時"
+  t.datetime "updated_at", null: false, comment: "更新日時"
+  t.index ["netkeiba_horse_id"], name: "horses_index_2"
+  t.index ["netkeiba_horse_id"], name: "netkeiba_horse_id", unique: true
+end
+
+create_table "jockeys", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade, comment: "騎手" do |t|
+  t.string "netkeiba_jockey_id", null: false, comment: "netkeibaの騎手ID"
+  t.string "name", null: false, comment: "騎手名"
+  t.datetime "created_at", null: false, comment: "作成日時"
+  t.datetime "updated_at", null: false, comment: "更新日時"
+  t.index ["netkeiba_jockey_id"], name: "netkeiba_jockey_id", unique: true
+end
+
+create_table "races", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade, comment: "レース" do |t|
+  t.string "netkeiba_race_id", null: false, comment: "netkeibaのレースID"
+  t.date "date", null: false, comment: "開催日"
+  t.string "track", null: false, comment: "競馬場名"
+  t.integer "number", null: false, comment: "レース番号"
+  t.string "name", null: false, comment: "レース名"
+  t.integer "type", null: false, comment: "レース種別"
+  t.integer "turn", null: false, comment: "コーナー"
+  t.integer "distance", null: false, comment: "距離"
+  t.datetime "created_at", null: false, comment: "作成日時"
+  t.datetime "updated_at", null: false, comment: "更新日時"
+  t.index ["netkeiba_race_id"], name: "netkeiba_race_id", unique: true
+  t.index ["netkeiba_race_id"], name: "races_index_1"
+end
+
+add_foreign_key "entries", "horses", name: "entries_ibfk_2"
+add_foreign_key "entries", "jockeys", name: "entries_ibfk_3"
+add_foreign_key "entries", "races", name: "entries_ibfk_1"
