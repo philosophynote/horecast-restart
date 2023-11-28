@@ -1,32 +1,43 @@
 version: "3.9"
 services:
+  backend:
+    build: 
+      dockerfile: ./backend/development.Dockerfile
+      context: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./backend:/app:delegated
+    environment:
+      BUNDLE_APP_CONFIG: /usr/local/bundle
+      TZ: "Asia/Tokyo"
+    hostname: backend
+      # - ./backend/bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
   db:
-    image: mysql:8.2
+    image: mysql:8.0
     command:
       - --sql-mode=NO_ENGINE_SUBSTITUTION
       - --default-time-zone=Asia/Tokyo
       - --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./tmp/db:/var/lib/mysql
-      - ./backend/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+      - ./backend/mysql-data:/var/lib/mysql
+      - ./backend/tools:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
     restart: always
+    env_file:
+      - ./backend/.env
     environment:
-      MYSQL_ROOT_PASSWORD: change_me_right_now
+      MYSQL_ROOT_PASSWORD: password
       TZ: Asia/Tokyo
-  backend:
-    build: 
-      context: ./backend
-      dockerfile: development.Dockerfile
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - ./backend:/app
-      - bundle_cache:/usr/local/bundle
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
+    hostname: db
 
-volumes:
-  bundle_cache:
+
+# volumes:
+#   mysql-data:
+#   bundle_cache:

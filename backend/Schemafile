@@ -50,6 +50,6 @@ create_table "races", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force
   t.index ["netkeiba_race_id"], name: "races_index_1"
 end
 
-add_foreign_key "entries", "horses", name: "entries_ibfk_2"
-add_foreign_key "entries", "jockeys", name: "entries_ibfk_3"
-add_foreign_key "entries", "races", name: "entries_ibfk_1"
+# add_foreign_key "entries", "horses", name: "entries_ibfk_2"
+# add_foreign_key "entries", "jockeys", name: "entries_ibfk_3"
+# add_foreign_key "entries", "races", name: "entries_ibfk_1"
