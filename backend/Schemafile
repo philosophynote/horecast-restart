@@ -41,7 +41,7 @@ create_table "races", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force
   t.string "track", null: false, comment: "競馬場名"
   t.integer "number", null: false, comment: "レース番号"
   t.string "name", null: false, comment: "レース名"
-  t.integer "type", null: false, comment: "レース種別"
+  t.integer "course_type", null: false, comment: "レース種別"
   t.integer "turn", null: false, comment: "コーナー"
   t.integer "distance", null: false, comment: "距離"
   t.datetime "created_at", null: false, comment: "作成日時"
@@ -50,6 +50,6 @@ create_table "races", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force
   t.index ["netkeiba_race_id"], name: "races_index_1"
 end
 
-# add_foreign_key "entries", "horses", name: "entries_ibfk_2"
-# add_foreign_key "entries", "jockeys", name: "entries_ibfk_3"
-# add_foreign_key "entries", "races", name: "entries_ibfk_1"
+add_foreign_key "entries", "horses", name: "entries_ibfk_2"
+add_foreign_key "entries", "jockeys", name: "entries_ibfk_3"
+add_foreign_key "entries", "races", name: "entries_ibfk_1"
