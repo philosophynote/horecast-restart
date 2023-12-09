@@ -5,7 +5,7 @@ create_table "entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", for
   t.integer "horse_id", null: false, comment: "競走馬ID"
   t.integer "bracket_number", null: false, comment: "枠番"
   t.integer "horse_number", null: false, comment: "馬番"
-  t.integer "sex", null: false, comment: "性別"
+  t.string "sex", null: false, comment: "性別"
   t.integer "age", null: false, comment: "年齢"
   t.integer "jockey_id", null: false, comment: "騎手ID"
   t.float "jockey_weight", null: false, comment: "騎手体重"
