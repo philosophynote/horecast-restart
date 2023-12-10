@@ -90,6 +90,12 @@ GEM
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -266,6 +272,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  database_cleaner
   debug
   dotenv-rails
   factory_bot_rails

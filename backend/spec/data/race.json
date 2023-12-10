@@ -1,0 +1,70 @@
+{
+  "netkeiba_race_id": {
+      "202306050307": {
+          "race_date": "2023/12/9",
+          "track": "中山",
+          "race_number": "7",
+          "race_name": "3歳以上1勝クラス",
+          "course_type": "turf",
+          "turn": "right",
+          "distance": 1200,
+          "horses": [
+              {
+                  "bracket_number": 1,
+                  "horse_number": 1,
+                  "sex": "牝",
+                  "age": 3,
+                  "netkeiba_jockey_id": "01188",
+                  "jockey_weight": 54.0,
+                  "jockey_name": "永野",
+                  "netkeiba_horse_id": "2020104796",
+                  "horse_name": "ホイッスルソング"
+              },
+              {
+                  "bracket_number": 2,
+                  "horse_number": 2,
+                  "sex": "牡",
+                  "age": 4,
+                  "netkeiba_jockey_id": "05386",
+                  "jockey_weight": 58.0,
+                  "jockey_name": "戸崎圭",
+                  "netkeiba_horse_id": "2019106503",
+                  "horse_name": "ソレントフレイバー"
+              }
+          ]
+      },
+      "202306050302": {
+          "race_date": "2023/12/9",
+          "track": "中山",
+          "race_number": "2",
+          "race_name": "2歳未勝利",
+          "course_type": "dirt",
+          "turn": "right",
+          "distance": 1800,
+          "horses": [
+              {
+                  "bracket_number": 1,
+                  "horse_number": 1,
+                  "sex": "牝",
+                  "age": 2,
+                  "netkeiba_jockey_id": "01158",
+                  "jockey_weight": 55.0,
+                  "jockey_name": "野中",
+                  "netkeiba_horse_id": "2021106874",
+                  "horse_name": "ゴールドアローン"
+              },
+              {
+                  "bracket_number": 2,
+                  "horse_number": 2,
+                  "sex": "牡",
+                  "age": 2,
+                  "netkeiba_jockey_id": "01096",
+                  "jockey_weight": 56.0,
+                  "jockey_name": "大野",
+                  "netkeiba_horse_id": "2021100506",
+                  "horse_name": "キングクレオール"
+              }
+          ]
+      }
+  }
+}
