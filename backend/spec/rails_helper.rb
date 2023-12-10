@@ -48,7 +48,7 @@ RSpec.configure do |config|
   # `post` in specs under `spec/controllers`.
   #
   # You can disable this behaviour by removing the line below, and instead
-  # explicitly tag your specs with their type, e.g.:
+  # explicitly tag your specs with their  , e.g.:
   #
   #     RSpec.describe UsersController, type: :controller do
   #       # ...
@@ -65,4 +65,22 @@ RSpec.configure do |config|
 
   # Setting FactoryBot
   config.include FactoryBot::Syntax::Methods
+
+  # テスト全体の前に実行する処理をブロックで記述
+  config.before(:suite) do
+    # データベースをCleanする方法を'transaction'に指定
+    DatabaseCleaner.strategy = :transaction
+    # このタイミングで'transaction'でデータベースをCleanしておく
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  # 各exampleの前および後に実行する処理をブロックで記述
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      # ここに処理を記述する
+      # ここがexampleの実行タイミング
+      example.run
+      # ここに処理を記述する ##
+    end
+  end
 end
