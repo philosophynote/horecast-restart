@@ -37,17 +37,17 @@ interface Track {
 }
 
 export default function Home() {
-  const [raceDate, setRaceDate] = useState(null);
-  const [raceTrack, setRaceTrack] = useState(null);
-  const [raceNumber, setRaceNumber] = useState(null);
-  const [tracks, setTracks] = useState([]);
+  // const [raceDate, setRaceDate] = useState(null);
+  // const [raceTrack, setRaceTrack] = useState(null);
+  // const [raceNumber, setRaceNumber] = useState(null);
+  // const [tracks, setTracks] = useState([]);
 
-  useEffect(() => {
-    fetchTrack().then(data => {
-      const hoge = data.map((d: Race) => {[d.id,d.track]})
-      setTracks(hoge)
-    })
-  }, []);
+  // useEffect(() => {
+  //   fetchTrack().then(data => {
+  //     const hoge = data.map((d: Race) => {[d.id,d.track]})
+  //     setTracks(hoge)
+  //   })
+  // }, []);
 
   // const handleLocationClick = (location) => {
   //   setTracks(location);
