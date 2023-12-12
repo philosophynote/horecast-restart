@@ -22,11 +22,11 @@ class Race < ApplicationRecord
   enum :turn, { right: 0, left: 1, straight: 2, obstacle: 3 }, suffix: true
 
   # 指定した日付のレースを取得するscope
-  scope :by_date, -> (date) { where(date: date) }
+  scope :by_date, -> (date) { where(date: date) if date.present?}
   # 指定したレース番号のレースを取得するscope
-  scope :by_number, -> (number) { where(number: number) }
+  scope :by_number, -> (number) { where(number: number) if number.present? }
   # 指定した競馬場のレースを取得するscope
-  scope :by_track, -> (track) { where(track: track) }
+  scope :by_track, -> (track) { where(track: track) if track.present? }
   # 上記3つのscopeを組み合わせたscope
-  scope :search_race, ->(date,track,number) { by_date(date).by_track(track).by_number(number) }
+  scope :search_race, ->(date: nil, track:nil, number:nil ) { by_date(date).by_track(track).by_number(number) }
 end

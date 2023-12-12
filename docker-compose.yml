@@ -7,9 +7,10 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./backend:/app:cached
-      - bundle_path:/app/vendor/bundle
+      - bundle_path:/usr/local/bundle
     environment:
-      BUNDLE_APP_CONFIG: /usr/local/bundle
+      # BUNDLE_APP_CONFIG: /usr/local/bundle
+      RAILS_ENV: development
       TZ: "Asia/Tokyo"
     hostname: backend
       # - ./backend/bundle_cache:/usr/local/bundle
@@ -26,7 +27,7 @@ services:
       - --default-time-zone=Asia/Tokyo
       - --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./backend/mysql-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
       - ./backend/tools:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
@@ -41,6 +42,7 @@ services:
 volumes:
   # node_modules: {}
   bundle_path:
+  mysql-data:
 # volumes:
 #   mysql-data:
 #   bundle_cache:
