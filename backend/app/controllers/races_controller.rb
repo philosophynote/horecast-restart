@@ -1,5 +1,11 @@
 
 class RacesController < ApplicationController
+  def index 
+    search_params = { date: params[:date], track: params[:track], number: params[:number] }
+    races = Race.search_race(**search_params)
+    render json: races.to_json, status: :ok
+  end
+
   def create
     params[:netkeiba_race_id].each do |race_id, entries_data|
       race = Race.build(
