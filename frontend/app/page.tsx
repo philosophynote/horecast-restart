@@ -61,8 +61,8 @@ export default function Home() {
             <SelectValue placeholder="Racedate" />
           </SelectTrigger>
           <SelectContent>
-            {dates.map(date => (
-              <SelectItem value={date}>{date}</SelectItem>
+            {dates.map((date, index) => (
+              <SelectItem key={index} value={date}>{date}</SelectItem>
             ))}
           </SelectContent>
         </Select>
