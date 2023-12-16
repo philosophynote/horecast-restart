@@ -2,8 +2,13 @@
 class RacesController < ApplicationController
   def index 
     search_params = { date: params[:date], track: params[:track], number: params[:number] }
-    races = Race.search_race(**search_params)
+    races = Race.search(**search_params)
     render json: races.to_json, status: :ok
+  end
+
+  def show
+    race = Race.includes(entries: [:horse, :jockey]).find(params[:id])
+    render json: race.show_serializer.to_json, status: :ok
   end
 
   def create
