@@ -28,5 +28,46 @@ class Race < ApplicationRecord
   # 指定した競馬場のレースを取得するscope
   scope :by_track, -> (track) { where(track: track) if track.present? }
   # 上記3つのscopeを組み合わせたscope
-  scope :search_race, ->(date: nil, track:nil, number:nil ) { by_date(date).by_track(track).by_number(number) }
+  scope :fetch, ->(date: nil, track: nil, number: nil ) { by_date(date).by_track(track).by_number(number) }
+  scope :number_asc, -> { order(number: :asc) }
+  scope :date_asc, -> { order(date: :asc) }
+  scope :date_number_order, -> { date_asc.number_asc }
+
+  def self.search(date: nil, track: nil, number: nil)
+    races = fetch(date: date, track: track, number: number).date_number_order
+    serialized_races = races.map do |race|
+      race.index_serializer
+    end
+    { races: serialized_races }
+  end
+
+  def index_serializer
+    { 
+      id: self.id,
+      name: self.name,
+      date: self.date,
+      track: self.track,
+      number: self.number,
+      type: self.course_type,
+      turn: self.turn,
+      distance: self.distance,
+    }
+  end
+
+  def show_serializer
+    # joined_race = self.joins(entries: [:horse, :jockey])
+    serialized_race = self.entries.map do |entry|
+      { 
+        id: entry.id,
+        bracket_number: entry.bracket_number,
+        horse_number: entry.horse_number,
+        horse_name: entry.horse.name,
+        sex_age: "#{entry.sex}#{entry.age}",
+        jockey_name: entry.jockey.name,
+        jockey_weight: entry.jockey_weight,
+        score: entry.predict_score,
+       }
+    end
+    { race: serialized_race }
+  end
 end
