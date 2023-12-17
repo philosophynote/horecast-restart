@@ -30,6 +30,8 @@ export default function Home() {
   const [races, setRaces] = useState<Race[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [dates, setDates] = useState<Array<string>>([]);
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [tabs, setTabs] = useState<string[]>([]);
 
   const fetchRaceDetails = (raceId: number) => {
     fetch(`${process.env.NEXT_PUBLIC_APP_HOST}/races/${raceId}`)
@@ -40,6 +42,18 @@ export default function Home() {
       .catch(error => console.error('Error fetching race details: ', error));
   };
 
+  // 日付を変更した際は競馬場は初期化する
+  const fetchRaceIndex = () => {
+    const url = new URL(`${process.env.NEXT_PUBLIC_APP_HOST}/races/`);
+    url.searchParams.append('date', selectedDate);
+    fetch(url.toString())
+    .then(response => response.json())
+    .then(data => {
+      setRaces(data.races);
+    })
+    .catch(error => console.error('Error fetching race details: ', error));
+  }
+
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_APP_HOST}/races`)
       .then(response => response.json())
@@ -47,18 +61,23 @@ export default function Home() {
         setRaces(data.races);
         const uniqueDates: Array<string> = Array.from(new Set(data.races.map((race: Race) => race.date)));
         const uniqueTracks: Array<string> = Array.from(new Set(data.races.map((race: Race) => race.track)));
-        setSelectedTab(uniqueTracks[0]);
         setDates(uniqueDates);
+        setTabs(uniqueTracks);
       })
       .catch(error => console.error('Error fetching data: ', error));
   }, []);
-  return (
 
+  useEffect(() => {
+    if (selectedDate) {
+      fetchRaceIndex()
+    }
+  }, [selectedDate]);
+  return (
     <>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <Select>
+        <Select onValueChange={setSelectedDate}>
           <SelectTrigger className="w-[240px]">
-            <SelectValue placeholder="Racedate" />
+            <SelectValue placeholder="レース開催日" />
           </SelectTrigger>
           <SelectContent>
             {dates.map((date, index) => (
@@ -66,11 +85,11 @@ export default function Home() {
             ))}
           </SelectContent>
         </Select>
-        <Tabs defaultValue={selectedTab}  className="w-[2000px]">
+        <Tabs className="w-[1200px]">
           <TabsList className="w-[300px]">
-            {Array.from(new Set(races.map(race => race.track))).map(track => (
-              <TabsTrigger key={track} value={track} className="w-[100px]" onClick={() => setSelectedTab(track)}>
-                {track}
+            {tabs.map((tab,index) => (
+              <TabsTrigger key={index} value={tab} className="w-[100px]" onClick={() => setSelectedTab(tab)}>
+                {tab}
               </TabsTrigger>
             ))}
           </TabsList>
