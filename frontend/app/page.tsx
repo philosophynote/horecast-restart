@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from "react"
-// import { fetchTrack } from '@/lib/data';
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -19,9 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-// import DateSelect from "@/app/ui/entries/date-select"
-// import TrackTab from "@/app/ui/entries/track-tab"
-// import { Skeleton } from "@/components/ui/skeleton"
 import { Race,Entry } from "@/lib/definitions"
 import { Button } from "@/components/ui/button"
 
@@ -72,6 +68,9 @@ export default function Home() {
       fetchRaceIndex()
     }
   }, [selectedDate]);
+
+  const recommendBadge = (rank: Entry["rank"]) => rank !== 1 ? "secondary" : undefined
+
   return (
     <>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
@@ -156,7 +155,7 @@ export default function Home() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge>{entry.score}</Badge>
+                    {entry.recommend && <Badge variant={recommendBadge(entry.rank)}>Recommended</Badge>}
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      entry: "出馬表"
+      horse: "競走馬"
+      jockey: "騎手"
+      race: "レース"
+    attributes:
+      race:
+        course_type:
+          turf: "芝"
+          dirt: "ダ"
+          obstacle: "障"
+        turn:
+          right: "右"
+          left: "左"
+          straight: "直"
+          obstacle: "障"

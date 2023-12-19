@@ -21,13 +21,9 @@ class Race < ApplicationRecord
   enum :course_type, { turf: 0, dirt: 1, obstacle: 2 }
   enum :turn, { right: 0, left: 1, straight: 2, obstacle: 3 }, suffix: true
 
-  # 指定した日付のレースを取得するscope
   scope :by_date, -> (date) { where(date: date) if date.present?}
-  # 指定したレース番号のレースを取得するscope
   scope :by_number, -> (number) { where(number: number) if number.present? }
-  # 指定した競馬場のレースを取得するscope
   scope :by_track, -> (track) { where(track: track) if track.present? }
-  # 上記3つのscopeを組み合わせたscope
   scope :fetch, ->(date: nil, track: nil, number: nil ) { by_date(date).by_track(track).by_number(number) }
   scope :number_asc, -> { order(number: :asc) }
   scope :date_asc, -> { order(date: :asc) }
@@ -48,14 +44,14 @@ class Race < ApplicationRecord
       date: self.date,
       track: self.track,
       number: self.number,
-      type: self.course_type,
-      turn: self.turn,
+      type: self.localized_course_type ,
+      turn: self.localized_turn,
       distance: self.distance,
     }
   end
 
   def show_serializer
-    # joined_race = self.joins(entries: [:horse, :jockey])
+    rank_hash = self.rank_entries
     serialized_race = self.entries.map do |entry|
       { 
         id: entry.id,
@@ -65,9 +61,24 @@ class Race < ApplicationRecord
         sex_age: "#{entry.sex}#{entry.age}",
         jockey_name: entry.jockey.name,
         jockey_weight: entry.jockey_weight,
-        score: entry.predict_score,
+        recommend: entry.recommend?,
+        rank: rank_hash[entry.id],
        }
     end
     { race: serialized_race }
+  end
+
+  def rank_entries
+    self.entries.order(predict_score: :desc).each_with_object({}).with_index(1) do |(entry, ranks), index|
+      ranks[entry.id] = index
+    end
+  end
+
+  def localized_course_type
+    I18n.t("activerecord.attributes.race.course_type.#{course_type}")
+  end
+
+  def localized_turn
+    I18n.t("activerecord.attributes.race.turn.#{turn}")
   end
 end
