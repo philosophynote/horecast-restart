@@ -17,5 +17,6 @@ export type Entry = {
   sex_age: string;
   jockey_name: string;
   jockey_weight: string;
-  score: number;
+  recommend: boolean;
+  rank: number;
 }
