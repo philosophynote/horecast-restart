@@ -67,6 +67,7 @@ export default function Home() {
     if (selectedDate) {
       fetchRaceIndex()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate]);
 
   const recommendBadge = (rank: Entry["rank"]) => rank !== 1 ? "secondary" : undefined
