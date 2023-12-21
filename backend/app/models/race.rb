@@ -63,6 +63,7 @@ class Race < ApplicationRecord
         jockey_weight: entry.jockey_weight,
         recommend: entry.recommend?,
         rank: rank_hash[entry.id],
+        result: entry.result,
        }
     end
     { race: serialized_race }
