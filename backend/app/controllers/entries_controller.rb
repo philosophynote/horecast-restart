@@ -13,7 +13,10 @@ class EntriesController < ApplicationController
         entry = race.entries.find_by(horse_number: entry_data[:horse_number])
         next unless entry
 
-        entry.update!(predict_score: entry_data[:predict_score])
+        update_params = {}
+        update_params[:predict_score] = entry_data["score"] if entry_data.key?("score")
+        update_params[:result] = entry_data["result"] if entry_data.key?("result")
+        entry.update!(update_params)
       end
     end
 
