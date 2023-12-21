@@ -129,6 +129,7 @@ export default function Home() {
                     <TableHead>騎手</TableHead>
                     <TableHead>斤量</TableHead>
                     <TableHead>予想</TableHead>
+                    <TableHead>結果</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -158,6 +159,11 @@ export default function Home() {
                       </TableCell>
                       <TableCell>
                         {entry.recommend && <Badge variant={recommendBadge(entry.rank)}>Recommended</Badge>}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <span>{entry.result}</span>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
