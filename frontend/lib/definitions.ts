@@ -19,4 +19,5 @@ export type Entry = {
   jockey_weight: string;
   recommend: boolean;
   rank: number;
+  result: number;
 }
