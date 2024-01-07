@@ -14,7 +14,7 @@ class EntriesController < ApplicationController
         next unless entry
 
         update_params = {}
-        update_params[:predict_score] = entry_data["score"] if entry_data.key?("score")
+        update_params[:predict_score] = entry_data["predict_score"] if entry_data.key?("predict_score")
         update_params[:result] = entry_data["result"] if entry_data.key?("result")
         entry.update!(update_params)
       end
